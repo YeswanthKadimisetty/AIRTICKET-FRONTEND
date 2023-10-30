@@ -8,6 +8,7 @@ import './Login.css'
 import { useNavigate} from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { GoogleLogin } from "@react-oauth/google";
 
 
 
@@ -48,6 +49,20 @@ const Login = () => {
         }
 
 
+
+
+
+        // const responseMessage = (response) => {
+        //     console.log(response);
+        // };
+        // const errorMessage = (error) => {
+        //     console.log(error);
+        // };
+
+
+
+
+
     return ( 
         <div className="main-login-container">
         <div className="icons-container">
@@ -64,6 +79,35 @@ const Login = () => {
                 <a href="/register"> Create Account</a>
             </div>
             <button className="l-button" onClick={()=>handleLogin()}>Login</button>
+            
+            
+            
+            <GoogleLogin
+             onSuccess={credentialResponse => {
+              console.log(credentialResponse);
+            //   const user = jwt_decode(credentialResponse.credential);
+            //   console.log(user);
+              axios.get(`https://localhost:44351/api/Users/${email},${password}`
+                      ).then((response)=>{
+                      console.log(response.data);
+                    //   localStorage.setItem("Authtoken",JSON.stringify(response.data.jwt));
+                    //   localStorage.setItem("Name",JSON.stringify(response.data.id.name));
+                      navigate('/admin');
+                  }).catch(err=>{
+                      alert(err.response.data);
+                  });
+ 
+            }}
+         
+            onError={() => {
+              console.log('Login Failed');
+            }}
+         
+          />
+            
+
+
+
         </div>
     </div>
      );

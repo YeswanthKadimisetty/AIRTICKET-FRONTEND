@@ -1,3 +1,5 @@
+import React from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Mainpage from "./MainPage";
 import SearchedFlight from "./SearchedFlights";
@@ -10,12 +12,14 @@ import AdminPage from "./AdminPage";
 import AllUsers from "./AllUsers";
 import AddFlight from "./AddFLight";
 import Print from "./Print";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 function App() {
 
   const user=JSON.parse(localStorage.getItem('user'))
   return (
     <>
+    <GoogleOAuthProvider clientId="822813257764-549f0b3l9t05kmjcif55aioo60gbgldd.apps.googleusercontent.com">
     <Routes>
       <Route exact path="/" element={<Navigate replace to="/mainpage" />}></Route>
       <Route exact path="/mainpage" element={<Mainpage/>}></Route>
@@ -31,8 +35,10 @@ function App() {
       <Route exact path='/print' element={<Print/>}></Route>
 
     </Routes>
+    </GoogleOAuthProvider>
     </>
   );
 }
+
 
 export default App;
